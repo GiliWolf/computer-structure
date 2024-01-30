@@ -1,0 +1,3 @@
+    movq %rdi, %r8 # pstring1
+    movq %rsi, %r9 # pstring2
+    movq %rdx, %r10 # i

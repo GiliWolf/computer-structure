@@ -1,0 +1,28 @@
+    movq $counter_msg, %rdi
+    movq counter, %rsi
+    movq max_tries, %rdx
+    call printf
+
+    # print seed number
+    movq $seed_msg, %rdi
+    movq user_seed, %rsi
+    xorq %rax, %rax
+    call printf
+
+     # print random number
+    movq $rand_msg, %rdi
+    movq rand_number, %rsi
+    xorq %rax, %rax
+    call printf
+
+    # set the seed
+    movq user_seed, %r8
+    movq %r8, %rdi
+    xorq %rax, %rax
+    call srand
+
+    # get random number
+    movq rand_number, %r8
+    movq %r8, %rdi
+    xorq %rax, %rax
+    call rand
