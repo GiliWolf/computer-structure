@@ -1,3 +1,10 @@
     movq %rdi, %r8 # pstring1
     movq %rsi, %r9 # pstring2
     movq %rdx, %r10 # i
+
+    
+    # keep lengths of strings
+    movzbl (%r13), %r15
+    movq %r15, -8(%rbp) # length of str1 (dest)
+    movzbl (%r14), %r15
+    movq %r15, -16(%rbp) # length of str2 (source)

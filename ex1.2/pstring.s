@@ -82,12 +82,12 @@ pstrijcpy:
     pushq %rbp
     movq %rsp, %rbp
 
-    # allocate space for args lengths
-    subq $32, %rsp
+    # allocate space for saving i + j
+    subq $16, %rsp
 
     # save args in register
-    movq %rdi, %r8 # pstring1
-    movq %rsi, %r9 # pstring2
+    movq %rdi, %r13 # pstring1
+    movq %rsi, %r14 # pstring2
     movq %rdx, %r10 # i
     movq %rcx, %r11 # j
 
@@ -108,35 +108,61 @@ pstrijcpy:
     cmpb %r11b, %r12b
     jbe .print_error
 
-    # keep lengths of strings
-    movzbl (%r8), %r13 # length of str1 (dest)
-    movzbl (%r9), %r14 # length of str2 (source)
+    # keep i+j on stack
+    movq %r10, -8(%rbp) # i (-24)
+    movq %r11, -16(%rbp) # j (-32)
+
+    # change ptr to string to ptr + i
+    addq -8(%rbp), %r13
+    addq -8(%rbp), %r14
 .loop:
-    incq %r8
-    incq %r9
-    # Read 1st byte from source string
-    movb (%r9), %al
+    # in first loop: +1 beacuse of the length in the start of the pointer
+    incq %r13 # str1 (dest)
+    incq %r14 # str2 (source)
+
+    # get source [i]
+    movb (%r14), %al
 
     # If we're at the end of the string, exit
     cmpb $0x0, %al
-    je .exit2
+    je .exit3
     
-    # need to compare i >j ? - meaning we need to stop coping 
+    # need to compare i >j ? - meaning we need to stop coping
+    movq -8(%rbp), %r15 # get i
+    cmpq %r15, -16(%rbp) # compare to j
+    jb .exit3
 
-    # movb %al, (%r9)
+    # dest[i] <- source [i]
+    movb %al, (%r13)
 
-    # increament i
+    # increament i 
+    incq -8(%rbp)
 
-    # exit program
-    jmp .exit
-    
+    # continue loop
+    jmp .loop
+
 .print_error:
     movq $error_msg, %rdi
     xorq %rax, %rax
     call printf
     jmp .exit
 
+.exit3:
+    # reset the pointer to the begging of the pstring
+    subq -8(%rbp), %r13
+    decq %r13
+    movq %r13, %rax
+    # reallocate rsp 
+    addq $32, %rsp 
+    # exit program
+    movq %rbp, %rsp
+    popq %rbp
+    ret
+
 .exit:
+    movq %r13, %rax
+    # reallocate rsp 
+    addq $16, %rsp
     # exit program
     movq %rbp, %rsp
     popq %rbp

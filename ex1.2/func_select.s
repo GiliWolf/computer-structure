@@ -122,8 +122,8 @@ run_func:
     subq $16, %rsp
     
     # save temporary pstring pointers:
-    movq %rsi, %r14
-    movq %rdx, %r15
+    movq %rsi, %r14 # str1
+    movq %rdx, %r15 # str 2
 
     # erase:
     movq $0x0, -8(%rbp)
@@ -151,11 +151,22 @@ run_func:
     movq -8(%rbp), %rdx
     movq -16(%rbp), %rcx
     call pstrijcpy
-    # movq $choise_34_output, %rdi
-    # movq $0x0, %rsi
-    # movq $0x0, %rdx
-    # xorq %rax, %rax
-    # call printf
+    
+    # print alternated pstring1 from function
+    movq $choise_34_output, %rdi
+    movzb (%rax), %rsi
+    incq %rax
+    movq %rax, %rdx
+    xorq %rax, %rax
+    call printf
+
+    # print pstring2 from function
+    movq $choise_34_output, %rdi
+    movzb (%r15), %rsi
+    incq %r15
+    movq %r15, %rdx
+    xorq %rax, %rax
+    call printf
 
     # reallocate rsp 
     addq $16, %rsp 
