@@ -128,8 +128,8 @@ pstrijcpy:
     je .exit3
     
     # need to compare i >j ? - meaning we need to stop coping
-    movq -8(%rbp), %r15 # get i
-    cmpq %r15, -16(%rbp) # compare to j
+    movq -8(%rbp), %r12 # get i
+    cmpq %r12, -16(%rbp) # compare to j
     jb .exit3
 
     # dest[i] <- source [i]
@@ -153,7 +153,7 @@ pstrijcpy:
     decq %r13
     movq %r13, %rax
     # reallocate rsp 
-    addq $32, %rsp 
+    addq $16, %rsp 
     # exit program
     movq %rbp, %rsp
     popq %rbp
