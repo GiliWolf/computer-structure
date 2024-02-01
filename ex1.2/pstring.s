@@ -2,12 +2,17 @@
 .section .rodata
 error_msg: 
     .string "invalid option!\n"
-print_char:
-    .string "this char: %c\n"
+
 
 .section .text
 .global pstrlen
 .type pstrlen, @function
+# PSTRLEN:
+#   args: Pstring* pstr
+#   return value: char (representing length of Pstring)
+#   ------------------------------------------------
+#   Given a pointer to a Pstring, the function returns its length by accesing the length field 
+#   found in the first byte of pstr
 pstrlen:
     # reset 
     pushq %rbp
@@ -19,13 +24,30 @@ pstrlen:
     # set return value
     movq %rdi, %rax
 
-    
     # exit program
     jmp .exit
 
 .section .text
 .global swapCase
 .type swapCase, @function
+#   SWAPCASE:
+#   args: Pstring *pstr
+#   return value: Pstring*
+#   ------------------------------------------------
+#   Given a pointer to a Pstring, the function turns every capital letter to a little one and vice versa.
+#   ALGO: check if letter => 0x61 ?
+#               true: check if <= 0x7a ?
+#                       true: lower cased, needs to be swapped to upper case
+#                       false: not a letter, continue without swapping
+#               false: check if <= 0x5a ?
+#                       true: check if >= 0x41 ?
+#                               true: uppercase, needs to be swapped to lower case
+#                               false: not a letter, continue without swapping
+#                       false: not a letter, continue without swapping
+#   Register usage:
+#       %r15 - saves pstr
+#       %r14 - saves pstr length
+#       %al - temporery saves current char
 swapCase:
     # reset 
     pushq %rbp
@@ -78,6 +100,7 @@ swapCase:
     movb %al, (%r15)
     jmp .swap
 
+# exit for choice 33
 .exit2:
     # reset the pointer to the begging of the pstring
     subq %r14, %r15
@@ -88,7 +111,20 @@ swapCase:
     popq %rbp
     ret
 
-
+#   PSTRIJCOPY:
+#   args: Pstring* dst, Pstring* src, char i, char j
+#   return value: Pstring*
+#   ------------------------------------------------
+#   Given pointers to two Pstrings, and two indices, the function copies src[i:j]
+#   into dst[i:j] and returns the pointer to dst. If either i or j are invalid given src and
+#   dst sizes, no changes is made to dst, and an error message is printted.
+#   Register usage:
+#       %r13 - pstring1
+#       m%r14 - pstring2
+#       %r10 - i
+#       %r11 - j
+#       %r12 - temporary saves pstr length in order to compare to j
+#       %al - temporery saves current char
 .section .text
 .global pstrijcpy
 .type pstrijcpy, @function
@@ -167,6 +203,7 @@ pstrijcpy:
     addq $16, %rsp
     jmp .exit
 
+# exit for choice 34
 .exit3:
     # reset the pointer to the begging of the pstring
     subq -8(%rbp), %r13
@@ -178,7 +215,7 @@ pstrijcpy:
     movq %rbp, %rsp
     popq %rbp
     ret
-
+# general exit
 .exit:
     # exit program
     movq %rbp, %rsp

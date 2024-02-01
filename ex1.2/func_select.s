@@ -1,14 +1,6 @@
 .extern pstring
 .extern printf
 
-.section .data
-choise:
-    .space 8, 0x0
-pstring_1:
-    .space 255, 0x0
-pstring_2:
-    .space 255, 0x0
-
 .section .rodata
 see_args:
     .string "choice: %d, str1: %s, str2: %s, len2: %d"
@@ -24,12 +16,24 @@ error_msg:
     .string "invalid option!\n"
 scanf_char_format:
     .string "%hhu %hhu"
-check_i_j:
-    .string "i: %hhu, j: %hhu\n"
 
 .section .text
 .global run_func
 .type run_func, @function
+# RUN FUNC:
+#   args: int choice, Pstring *pstr1, Pstring *pstr2
+#   no return value
+#   ------------------------------------------------
+#   this function calls a specific part of code according to the choice argument recieved.
+#   valid options: 31 - call pstrlen of each Pstring to calculate its length, then prints both lengths
+#                  33 - use swapCase to swap upper and lower case letters for each Pstring, then prints the two Pstrings
+#                  34 - receives from the user two integers as start and end indices. Then, call pstrijcpy with both
+#                       Pstring as parameters, and prints the return value and pstr2
+#   Register usage:
+#       %r13- temporary saves pstr2 in choise33
+#       %r14 - temporary saves pstr1 in choise34
+#       %r15 - temporary saves pstr2 in choise34
+
 run_func:
     # reset 
     pushq %rbp
@@ -136,13 +140,6 @@ run_func:
     leaq -16(%rbp), %rdx
     xorq %rax, %rax
     call scanf
-
-    # check i, j
-    movq $check_i_j, %rdi
-    movq -8(%rbp), %rsi
-    movq -16(%rbp), %rdx
-    xorq %rax, %rax
-    call printf
 
     # set args and call pstrijcpy
     movq %r14, %rdi
