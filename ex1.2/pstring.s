@@ -49,16 +49,28 @@ swapCase:
     cmpb $0x61, %al
     # greater than 61 (is lower case)
     jae .change_to_upper
-    # elsee (is upper case)
-    jmp .change_to_lower
+    # elsee - lower than 61 (is upper case)
+    # need to check if lower or equal than 0x5a (Z)
+    cmpb $0x5A, %al
+    jbe .change_to_lower
 
 
 .change_to_upper:
+    # iff above 0x7A, not a letter - continue without swapping
+    cmpb $0x7A, %al
+    ja .swap
+
+    # iff not - between the range: [0x61, 0x7a] (lowercase letter)
     subb $0x20,  %al
     movb %al, (%r15)
     jmp .swap
 
 .change_to_lower:
+    # iff below 0x41 (A), not a letter - continue without swapping
+    cmpb $0x41, %al
+    jb .swap 
+
+    # iff not - between the range: [0x41, 0x5a] (uppercase letter)
     addb $0x20,  %al
     movb %al, (%r15)
     jmp .swap

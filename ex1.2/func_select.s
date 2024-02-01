@@ -34,10 +34,6 @@ run_func:
     # reset 
     pushq %rbp
     movq %rsp, %rbp
-    
-    # as 1st arg is 31
-    # movq $0x1F, %rdi
-    # get choise 
 
     # 31:
     movq $0x1F, %rcx
@@ -53,6 +49,9 @@ run_func:
     movq $0x22, %rcx
     cmp %rdi, %rcx
     je .choise34
+
+    # iff not equal to one of the above - print error
+    jmp .print_error
 
 
 
@@ -170,6 +169,12 @@ run_func:
 
     # reallocate rsp 
     addq $16, %rsp 
+    jmp .exit
+
+.print_error:
+    movq $error_msg, %rdi
+    xorq %rax, %rax
+    call printf
     jmp .exit
 
 .exit:
