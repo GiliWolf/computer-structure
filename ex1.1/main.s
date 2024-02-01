@@ -38,6 +38,15 @@ win_msg:
 .section .text
 .global main
 .type main, @function
+# GUESSING GAME:
+#   ------------------------------------------------
+#   1) asks user to enter a configuration value - the seed for the rand() function
+#   2) generates a random number between 0 and N. 
+#   3) prints “What is your guess?” and scan number from user. 
+#   4) If the guess is incorrect, the program prints “Incorrect.”
+#   5) stops when either M iterations of the game are passed, or the user guesses the number correctly.
+#   global values: 
+#   N = 10 and M = 5.
 main:
     # reset 
     pushq %rbp
