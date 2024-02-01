@@ -14,7 +14,7 @@ pstrlen:
     movq %rsp, %rbp
 
     # get length of the pstr
-    movzbl (%rdi), %rdi
+    movzbq (%rdi), %rdi
 
     # set return value
     movq %rdi, %rax
@@ -34,7 +34,7 @@ swapCase:
     movq %rdi, %r15
 
     # keep length of string
-    movzbl (%r15), %r14
+    movzbq (%r15), %r14
 
 .swap:
     incq %r15
@@ -53,6 +53,9 @@ swapCase:
     # need to check if lower or equal than 0x5a (Z)
     cmpb $0x5A, %al
     jbe .change_to_lower
+
+    # iff not both, not a letter, continue without swapping:
+    jmp .swap
 
 
 .change_to_upper:
@@ -154,9 +157,14 @@ pstrijcpy:
     jmp .loop
 
 .print_error:
+    # print error
     movq $error_msg, %rdi
     xorq %rax, %rax
     call printf
+    # return original dest ptr (pstring1)
+    movq %r13, %rax
+    # reallocate rsp 
+    addq $16, %rsp
     jmp .exit
 
 .exit3:
@@ -172,9 +180,6 @@ pstrijcpy:
     ret
 
 .exit:
-    movq %r13, %rax
-    # reallocate rsp 
-    addq $16, %rsp
     # exit program
     movq %rbp, %rsp
     popq %rbp
