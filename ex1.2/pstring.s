@@ -1,7 +1,7 @@
 # 315144907 Gili Wolf
 .section .rodata
 error_msg: 
-    .string "invalid option!\n"
+    .string "invalid input!\n"
 
 
 .section .text

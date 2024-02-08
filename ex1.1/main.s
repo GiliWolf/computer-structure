@@ -31,9 +31,9 @@ guess_msg:
 incorrect_msg:
     .string "Incorrect.\n"
 lose_msg:
-    .string "Game over, you lost :(. the correct answer was %d\n"
+    .string "Game over, you lost :(. The correct answer was %d\n"
 win_msg:
-    .string "Congraz! You won!\n"
+    .string "Congratz! You won!\n"
 
 .section .text
 .global main
