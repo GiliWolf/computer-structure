@@ -1,0 +1,558 @@
+/lib64/ld-linux-x86-64.so.2
+fgets
+read
+alarm
+write
+connect
+memmove
+__libc_start_main
+strcmp
+fprintf
+socket
+signal
+fopen
+strcpy
+strtol
+__ctype_b_loc
+stdout
+puts
+fflush
+close
+strlen
+sleep
+getenv
+sprintf
+stdin
+gethostbyname
+stderr
+__errno_location
+exit
+__isoc99_sscanf
+libc.so.6
+GLIBC_2.3
+GLIBC_2.7
+GLIBC_2.34
+GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+__gmon_start__
+_ITM_registerTMCloneTable
+PTE1
+~-ATUS
+[]A\
+AUATUSH
+d$0A
+T$ H
+D$(H
+X[]A\A]
+ATUSH
+[]A\
+***truncH
+ated***
+AVAUATUSI
+[]A\A]A^
+AWAVAUATUSH
+Error: CH
+lient unI
+able to H
+create sI
+G ockefA
+Error: DH
+NS is unI
+able to H
+resolve I
+server aI
+G(ddrefA
+G,ssA
+Error: UH
+nable toI
+ connectH
+ to the I
+G servfA
+G$erA
+Error: RH
+esult stI
+ring tooH
+ large. I
+IncreaseH
+ SUBMITRI
+_MAXBUF
+<_v	
+Error: CH
+lient unI
+able to H
+read firI
+st headeH
+r from sI
+G0ervefA
+[]A\A]A^A_
+Error: CH
+lient unI
+able to H
+read staI
+tus messH
+age fromI
+ server
+Error: CH
+lient unI
+able to H
+write toI
+ the serI
+G(ver
+Error: RH
+esult stI
+ring conH
+tains anI
+ illegalH
+ or unprI
+intable H
+characteI
+W8fA
+G@r.A
+L$ L
+D$(H
+D$0H
+Error: CH
+lient unI
+able to H
+read heaI
+ders froH
+m serverI
+Error: CH
+lient unH
+able to H
+create sH
+E ockef
+Error: DH
+NS is unH
+able to H
+resolve H
+server aH
+E(ddref
+E,ss
+APRA
+%s: Error: Couldn't open %s
+Usage: %s [<input_file>]
+That's number 2.  Keep going!
+Halfway there!
+Good work!  On to the next...
+Welcome to my fiendish little bomb. You have 6 phases with
+which to blow yourself up. Have a nice day!
+Phase 1 defused. How about the next one?
+So you got that one.  Try this one.
+The moon unit will be divided into two divisions.
+Wow! You've defused the secret stage!
+sabres
+maduiersnfotvbylSo you think you can stop the bomb with ctrl-c, do you?
+Your instructor has been notified.
+Curses, you've found the secret phase!
+But finding it and solving it are quite different...
+Congratulations! You've defused the bomb!
+Your instructor has been notified and will verify your solution.
+Well...
+OK. :-)
+Invalid phase%s
+defused
+exploded
+%d:%s:%d:%s
+BOOM!!!
+The bomb has blown up.
+%d %d %d %d %d %d
+Error: Premature EOF on stdin
+GRADE_BOMB
+Error: Input line too long
+%d %d %s
+DrEvil
+planet
+Program timed out after %d seconds
+Error: HTTP request failed with error %d: %s
+GET /%s/submitr.pl/?userid=%s&userpwd=%s&lab=%s&result=%s&submit=submit HTTP/1.0
+Error: Unable to connect to server %s
+%%%02X
+%s %d %[a-zA-z ]
+AUTORESULT_STRING=%s
+89230_5883_ex2
+csapp
+;*3$"
+KDL8O4F9peF8dTjYKjxl
+wolfgil
+GCC: (GNU) 11.4.1 20230605 (Red Hat 11.4.1-2)
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+3p1212
+running gcc 11.4.1 20230605
+annobin gcc 11.4.1 20230605
+GA*GOW
+GA+stack_clash
+GA*cf_protection
+GA*FORTIFY
+GA+GLIBCXX_ASSERTIONS
+GA!stack_realign
+;!$9
+printf
+__off_t
+_IO_read_ptr
+_chain
+size_t
+_shortbuf
+_IO_buf_base
+long long unsigned int
+read_line
+long long int
+phase_defused
+_fileno
+_IO_read_end
+_flags
+_IO_buf_end
+_cur_column
+_IO_codecvt
+_old_offset
+infile
+initialize_bomb
+GNU C17 11.4.1 20230605 (Red Hat 11.4.1-2) -mtune=generic -march=x86-64-v2 -ggdb -O1
+_IO_marker
+stdin
+_freeres_buf
+_IO_write_ptr
+short unsigned int
+_IO_save_base
+_lock
+_flags2
+_mode
+__builtin_puts
+_IO_write_end
+_IO_lock_t
+_IO_FILE
+fopen
+_markers
+unsigned char
+short int
+_IO_wide_data
+_vtable_offset
+exit
+input
+__off64_t
+_IO_read_base
+_IO_save_end
+__pad5
+_unused2
+argv
+phase_1
+phase_2
+phase_3
+phase_4
+phase_5
+phase_6
+_IO_backup_base
+argc
+_freeres_list
+main
+_IO_write_base
+/u/courses/89-230/bomblab/src
+bomb.c
+/usr/lib/gcc/x86_64-redhat-linux/11/include
+/usr/include/bits
+/usr/include/bits/types
+/usr/include
+stddef.h
+types.h
+struct_FILE.h
+stdio.h
+phases.h
+support.h
+stdlib.h
+<built-in>
+/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o
+.annobin_abi_note.c
+.annobin_abi_note.c_end
+.annobin_abi_note.c.hot
+.annobin_abi_note.c_end.hot
+.annobin_abi_note.c.unlikely
+.annobin_abi_note.c_end.unlikely
+.annobin_abi_note.c.startup
+.annobin_abi_note.c_end.startup
+.annobin_abi_note.c.exit
+.annobin_abi_note.c_end.exit
+__abi_tag
+.annobin_init.c
+.annobin_init.c_end
+.annobin_init.c.hot
+.annobin_init.c_end.hot
+.annobin_init.c.unlikely
+.annobin_init.c_end.unlikely
+.annobin_init.c.startup
+.annobin_init.c_end.startup
+.annobin_init.c.exit
+.annobin_init.c_end.exit
+.annobin_static_reloc.c
+.annobin_static_reloc.c_end
+.annobin_static_reloc.c.hot
+.annobin_static_reloc.c_end.hot
+.annobin_static_reloc.c.unlikely
+.annobin_static_reloc.c_end.unlikely
+.annobin_static_reloc.c.startup
+.annobin_static_reloc.c_end.startup
+.annobin_static_reloc.c.exit
+.annobin_static_reloc.c_end.exit
+.annobin__dl_relocate_static_pie.start
+.annobin__dl_relocate_static_pie.end
+crtstuff.c
+deregister_tm_clones
+__do_global_dtors_aux
+completed.0
+__do_global_dtors_aux_fini_array_entry
+frame_dummy
+__frame_dummy_init_array_entry
+bomb.c
+phases.c
+array.0
+support.c
+sig_handler
+driverlib.c
+rio_readlineb
+__FRAME_END__
+_DYNAMIC
+__GNU_EH_FRAME_HDR
+_GLOBAL_OFFSET_TABLE_
+skip
+getenv@GLIBC_2.2.5
+phase_defused
+__libc_start_main@GLIBC_2.34
+__errno_location@GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+stdout@GLIBC_2.2.5
+strcpy@GLIBC_2.2.5
+puts@GLIBC_2.2.5
+stdin@GLIBC_2.2.5
+write@GLIBC_2.2.5
+_edata
+_fini
+strlen@GLIBC_2.2.5
+num_input_strings
+phase_5
+initialize_bomb_solve
+blank_line
+submitr
+phase_3
+phase_1
+invalid_phase
+init_driver
+alarm@GLIBC_2.2.5
+close@GLIBC_2.2.5
+node3
+read@GLIBC_2.2.5
+fgets@GLIBC_2.2.5
+explode_bomb
+node1
+__data_start
+strcmp@GLIBC_2.2.5
+signal@GLIBC_2.2.5
+gethostbyname@GLIBC_2.2.5
+node5
+fprintf@GLIBC_2.2.5
+__gmon_start__
+strtol@GLIBC_2.2.5
+fun7
+__dso_handle
+_IO_stdin_used
+host_table
+func4
+string_length
+fflush@GLIBC_2.2.5
+__isoc99_sscanf@GLIBC_2.7
+_dl_relocate_static_pie
+secret_phase
+infile
+sigalrm_handler
+init_timeout
+__bss_start
+userid
+main
+memmove@GLIBC_2.2.5
+read_line
+strings_not_equal
+phase_4
+fopen@GLIBC_2.2.5
+phase_6
+scratch
+driver_post
+send_msg
+phase_2
+sprintf@GLIBC_2.2.5
+exit@GLIBC_2.2.5
+bomb_id
+connect@GLIBC_2.2.5
+__TMC_END__
+_ITM_registerTMCloneTable
+node2
+node4
+user_password
+sleep@GLIBC_2.2.5
+node6
+_init
+read_six_numbers
+initialize_bomb
+__ctype_b_loc@GLIBC_2.3
+stderr@GLIBC_2.2.5
+socket@GLIBC_2.2.5
+.symtab
+.strtab
+.shstrtab
+.interp
+.note.gnu.property
+.note.gnu.build-id
+.note.ABI-tag
+.gnu.hash
+.dynsym
+.dynstr
+.gnu.version
+.gnu.version_r
+.rela.dyn
+.rela.plt
+.init
+.text
+.fini
+.rodata
+.eh_frame_hdr
+.eh_frame
+.init_array
+.fini_array
+.dynamic
+.got
+.got.plt
+.data
+.bss
+.comment
+.gnu.build.attributes
+.debug_aranges
+.debug_info
+.debug_abbrev
+.debug_line
+.debug_str
+.debug_line_str
+.debug_loclists
