@@ -383,9 +383,9 @@ Disassembly of section .text:
   4014e8:	eb b7                	jmp    4014a1 <phase_3+0x46>
 
 00000000004014ea <func4>:
-  4014ea:	b8 00 00 00 00       	mov    $0x0,%eax
+  4014ea:	b8 00 00 00 00       	mov    $0x0,%eax  
   4014ef:	85 ff                	test   %edi,%edi
-  4014f1:	7e 2d                	jle    401520 <func4+0x36>
+  4014f1:	7e 2d                	jle    401520 <func4+0x36> # just when rdi=0, reurns. else - continues
   4014f3:	41 54                	push   %r12
   4014f5:	55                   	push   %rbp
   4014f6:	53                   	push   %rbx
@@ -393,15 +393,15 @@ Disassembly of section .text:
   4014f9:	89 f5                	mov    %esi,%ebp
   4014fb:	89 f0                	mov    %esi,%eax
   4014fd:	83 ff 01             	cmp    $0x1,%edi
-  401500:	74 19                	je     40151b <func4+0x31>
+  401500:	74 19                	je     40151b <func4+0x31> # jumps when stops the recursive call (rdi=1)
   401502:	8d 7f ff             	lea    -0x1(%rdi),%edi
   401505:	e8 e0 ff ff ff       	callq  4014ea <func4>
-  40150a:	44 8d 24 28          	lea    (%rax,%rbp,1),%r12d
+  40150a:	44 8d 24 28          	lea    (%rax,%rbp,1),%r12d # this is where 1st the recrsive call returns from 
   40150e:	8d 7b fe             	lea    -0x2(%rbx),%edi
   401511:	89 ee                	mov    %ebp,%esi
   401513:	e8 d2 ff ff ff       	callq  4014ea <func4>
-  401518:	44 01 e0             	add    %r12d,%eax
-  40151b:	5b                   	pop    %rbx
+  401518:	44 01 e0             	add    %r12d,%eax # back from the recusive call (2nd)
+  40151b:	5b                   	pop    %rbx # when last recursive call stops
   40151c:	5d                   	pop    %rbp
   40151d:	41 5c                	pop    %r12
   40151f:	c3                   	retq   
@@ -475,38 +475,39 @@ Disassembly of section .text:
   4015f9:	eb 30                	jmp    40162b <phase_6+0x58>
   4015fb:	48 83 c3 01          	add    $0x1,%rbx
   4015ff:	83 fb 05             	cmp    $0x5,%ebx
-  401602:	7f 10                	jg     401614 <phase_6+0x41>
-  401604:	8b 44 9c 30          	mov    0x30(%rsp,%rbx,4),%eax
+  401602:	7f 10                	jg     401614 <phase_6+0x41> # if i > 5 jump to 401614 end of 1st part
+  401604:	8b 44 9c 30          	mov    0x30(%rsp,%rbx,4),%eax # if r13 <= 5
   401608:	39 45 00             	cmp    %eax,0x0(%rbp)
-  40160b:	75 ee                	jne    4015fb <phase_6+0x28>
+  40160b:	75 ee                	jne    4015fb <phase_6+0x28> $ if num[i] != num[i+1](?) back to loop (4015fb)
   40160d:	e8 57 03 00 00       	callq  401969 <explode_bomb>
-  401612:	eb e7                	jmp    4015fb <phase_6+0x28>
-  401614:	49 83 c5 01          	add    $0x1,%r13
+  401612:	eb e7                	jmp    4015fb <phase_6+0x28> # after 1st loop: 
+  401614:	49 83 c5 01          	add    $0x1,%r13 
   401618:	49 83 c4 04          	add    $0x4,%r12
   40161c:	4c 89 e5             	mov    %r12,%rbp
   40161f:	41 8b 04 24          	mov    (%r12),%eax
   401623:	83 e8 01             	sub    $0x1,%eax
   401626:	83 f8 05             	cmp    $0x5,%eax
-  401629:	77 c9                	ja     4015f4 <phase_6+0x21>
+  401629:	77 c9                	ja     4015f4 <phase_6+0x21> # if rax ($i-1) > 5 : jump
   40162b:	41 83 fd 05          	cmp    $0x5,%r13d
-  40162f:	7f 05                	jg     401636 <phase_6+0x63>
+  40162f:	7f 05                	jg     401636 <phase_6+0x63> # if r13 > 5 :jump
   401631:	4c 89 eb             	mov    %r13,%rbx
-  401634:	eb ce                	jmp    401604 <phase_6+0x31>
-  401636:	be 00 00 00 00       	mov    $0x0,%esi
-  40163b:	8b 4c b4 30          	mov    0x30(%rsp,%rsi,4),%ecx
+  401634:	eb ce                	jmp    401604 <phase_6+0x31> # jump to
+  401636:	be 00 00 00 00       	mov    $0x0,%esi  # start of second part !!!!
+  40163b:	8b 4c b4 30          	mov    0x30(%rsp,%rsi,4),%ecx # 2nd part beginning loop:
   40163f:	b8 01 00 00 00       	mov    $0x1,%eax
   401644:	ba f0 52 40 00       	mov    $0x4052f0,%edx
   401649:	83 f9 01             	cmp    $0x1,%ecx
-  40164c:	7e 0b                	jle    401659 <phase_6+0x86>
+  40164c:	7e 0b                	jle    401659 <phase_6+0x86> # if $ in rcx <=1, jump to 401659
   40164e:	48 8b 52 08          	mov    0x8(%rdx),%rdx
   401652:	83 c0 01             	add    $0x1,%eax
   401655:	39 c8                	cmp    %ecx,%eax
-  401657:	75 f5                	jne    40164e <phase_6+0x7b>
-  401659:	48 89 14 f4          	mov    %rdx,(%rsp,%rsi,8)
-  40165d:	48 83 c6 01          	add    $0x1,%rsi
-  401661:	48 83 fe 06          	cmp    $0x6,%rsi
-  401665:	75 d4                	jne    40163b <phase_6+0x68>
-  401667:	48 8b 1c 24          	mov    (%rsp),%rbx
+  401657:	75 f5                	jne    40164e <phase_6+0x7b> 
+  401659:	48 89 14 f4          	mov    %rdx,(%rsp,%rsi,8) #saves rdx (command) in stack
+  40165d:	48 83 c6 01          	add    $0x1,%rsi 3 # adds 1 to rsi (counter)
+  401661:	48 83 fe 06          	cmp    $0x6,%rsi #check if counter <6
+
+  401665:	75 d4                	jne    40163b <phase_6+0x68> 3 return to 2nd loop
+  401667:	48 8b 1c 24          	mov    (%rsp),%rbx # end of loop, starts next part
   40166b:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
   401670:	48 89 43 08          	mov    %rax,0x8(%rbx)
   401674:	48 8b 54 24 10       	mov    0x10(%rsp),%rdx
@@ -524,7 +525,7 @@ Disassembly of section .text:
   4016a7:	48 8b 5b 08          	mov    0x8(%rbx),%rbx
   4016ab:	83 ed 01             	sub    $0x1,%ebp
   4016ae:	74 11                	je     4016c1 <phase_6+0xee>
-  4016b0:	48 8b 43 08          	mov    0x8(%rbx),%rax
+  4016b0:	48 8b 43 08          	mov    0x8(%rbx),%rax # second part:3 COMPARSION
   4016b4:	8b 00                	mov    (%rax),%eax
   4016b6:	39 03                	cmp    %eax,(%rbx)
   4016b8:	7e ed                	jle    4016a7 <phase_6+0xd4>
@@ -851,7 +852,7 @@ Disassembly of section .text:
   401aff:	48 83 ec 68          	sub    $0x68,%rsp
   401b03:	bf 01 00 00 00       	mov    $0x1,%edi
   401b08:	e8 cf fd ff ff       	callq  4018dc <send_msg>
-  401b0d:	83 3d fc 3c 00 00 06 	cmpl   $0x6,0x3cfc(%rip)        # 405810 <num_input_strings>
+  401b0d:	83 3d fc 3c 00 00 06 	cmpl   $0x6,0x3cfc(%rip)        # 405810 <num_input_strings> # rip + x  = 4056c9
   401b14:	74 05                	je     401b1b <phase_defused+0x1c>
   401b16:	48 83 c4 68          	add    $0x68,%rsp
   401b1a:	c3                   	retq   
