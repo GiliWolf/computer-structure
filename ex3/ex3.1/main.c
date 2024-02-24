@@ -20,6 +20,7 @@ int main(){
         if( n < 0)break;
         read_byte(cache,mem,n);
     }
+    write_byte(cache,mem, 4, 9);
  
     puts("");
     print_cache(cache);

@@ -132,65 +132,7 @@ int find_LFU(cache_line_t* set, int E){
     return last_LFU_index;
 }
 
-int find_line(cache_t cache, uchar* start, long int off){
-    uchar s1 =cache.s;
-    // get adress values
-    int s = (int) cache.s;
-    int b = (int) cache.b;
-    int t = (int) cache.t;
-    int E = (int) cache.E;
-    int B= b == 0?1:2<<(b-1);
-
-    // calculate number of adress bits
-    int m = s + b + t;
-
-    // get binary representaion of the offset value (as 'bits' array)
-    int binary_offset[m]; 
-    for (int i = 0; i < m; i++) {
-        binary_offset[m - 1 - i] = (off >> i) & 1;
-    }
-    
-    // get adress values according to off value
-    int set_index = convert_bits_to_decimal(binary_offset, s, t);
-    long int decimal_tag = convert_bits_to_decimal(binary_offset, t, 0);
-    int block_offset = convert_bits_to_decimal(binary_offset, b, t + s);
-
-    // go to the right set using set values
-    cache_line_t* temp_set = cache.cache[set_index];
-    //iterate over each line - 
-    int found_flag = 0;
-    for (int i = 0; i < E; i++){
-        // CACHE HIT    
-        if (temp_set[i].valid == 1 && temp_set[i].tag == decimal_tag){
-            // read byte
-            found_flag = 1;
-            temp_set[i].frequency += 1;
-            break;
-        }
-    }
-    //get least frequaent 
-    int lfu_line = find_LFU(temp_set, E);
-    // CACHE MISS: get data from 'RAM'
-    if (found_flag == 0){
-        uchar data = start[off];
-        temp_set[lfu_line].valid = 1;
-        temp_set[lfu_line].tag = decimal_tag;
-        temp_set[lfu_line].frequency += 1;
-        for (int j = 0; j < B; j++){
-            temp_set[lfu_line].block[j] = start[off+j-block_offset];
-        }
-        // printf("%d",temp_set[lfu_line].block[0]);
-        // printf("%d",temp_set[lfu_line].block[1]);
-        int b1 = temp_set[lfu_line].block[0];
-        int b2 = temp_set[lfu_line].block[1];
-        int b3 = 0;
-    }
-    return start[off];
-
-}
-
 uchar read_byte(cache_t cache, uchar* start, long int off){
-    uchar s1 =cache.s;
     // get adress values
     int s = (int) cache.s;
     int b = (int) cache.b;
@@ -198,20 +140,12 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
     int E = (int) cache.E;
     int B= b == 0?1:2<<(b-1);
     // change offset to binary number (array of "bits")
-    int m = s + b + t;
-    printf("m: %d", m);
-    // int size_of_long_int = sizeof(long int);
+    int m = s + b + t; // calculate num of adress bits
     int binary_offset[m]; 
     for (int i = 0; i < m; i++) {
         binary_offset[m - 1 - i] = (off >> i) & 1;
     }
 
-    printf("Bit array representation of %ld:\n", off);
-    for (int i = 0; i < m; i++) {
-        printf("%d", binary_offset[i]);
-    }
-    printf("\n");
-    
     // get adress values according to off value
     int set_index = convert_bits_to_decimal(binary_offset, s, t);
     long int decimal_tag = convert_bits_to_decimal(binary_offset, t, 0);
@@ -224,15 +158,15 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
     for (int i = 0; i < E; i++){
         // CACHE HIT    
         if (temp_set[i].valid == 1 && temp_set[i].tag == decimal_tag){
-            // read byte
             found_flag = 1;
             temp_set[i].frequency += 1;
             break;
         }
     }
-    //get least frequaent 
+    // CACHE MISS: 
+    // get least frequaent 
     int lfu_line = find_LFU(temp_set, E);
-    // CACHE MISS: get data from 'RAM'
+    // get data from 'RAM'
     if (found_flag == 0){
         uchar data = start[off];
         temp_set[lfu_line].valid = 1;
@@ -241,8 +175,6 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
         for (int j = 0; j < B; j++){
             temp_set[lfu_line].block[j] = start[off+j-block_offset];
         }
-        // printf("%d",temp_set[lfu_line].block[0]);
-        // printf("%d",temp_set[lfu_line].block[1]);
         int b1 = temp_set[lfu_line].block[0];
         int b2 = temp_set[lfu_line].block[1];
         int b3 = 0;
@@ -251,6 +183,56 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
 }
 
 void write_byte(cache_t cache, uchar* start, long int off, uchar new_){
-    uchar data = read_byte(cache, start, off);
+    // PRE ANALYSIS
+    // get adress values
+    int s = (int) cache.s;
+    int b = (int) cache.b;
+    int t = (int) cache.t;
+    int E = (int) cache.E;
+    int B= b == 0?1:2<<(b-1);
+    // change offset to binary number (array of "bits")
+    int m = s + b + t; // calculate num of adress bits
+    int binary_offset[m]; 
+    for (int i = 0; i < m; i++) {
+        binary_offset[m - 1 - i] = (off >> i) & 1;
+    }
 
+    // get adress values according to off value
+    int set_index = convert_bits_to_decimal(binary_offset, s, t);
+    long int decimal_tag = convert_bits_to_decimal(binary_offset, t, 0);
+    int block_offset = convert_bits_to_decimal(binary_offset, b, t + s);
+
+    // go to the right set using set values
+    cache_line_t* temp_set = cache.cache[set_index];
+    
+    // WRITE 
+    // change value in 'RAM'
+    start[off] = new_;
+    //iterate over each line - 
+    int found_flag = 0;
+    for (int i = 0; i < E; i++){
+        // CACHE HIT:  
+        if (temp_set[i].valid == 1 && temp_set[i].tag == decimal_tag){
+            found_flag = 1;
+            // change frequancy of line
+            temp_set[i].frequency += 1;
+            // change data block 
+            for (int j = 0; j < B; j++){
+                temp_set[i].block[j] = start[off+j-block_offset];
+            }
+            break;
+        }
+    }
+    // CACHE MISS:
+    //get least frequaent 
+    int lfu_line = find_LFU(temp_set, E);
+    // get data from 'RAM'
+    if (found_flag == 0){
+        temp_set[lfu_line].valid = 1;
+        temp_set[lfu_line].tag = decimal_tag;
+        temp_set[lfu_line].frequency += 1;
+        for (int j = 0; j < B; j++){
+            temp_set[lfu_line].block[j] = start[off+j-block_offset];
+        }
+    }
 }
