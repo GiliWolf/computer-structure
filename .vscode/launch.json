@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ex3/ex3.1/a.out",
-            "args": [],
+            "args": ["<","/home/gili/computer-structure/computer-structure/ex3/ex3.1/input.txt"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -26,8 +26,9 @@
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            // "redirectInput": "${workspaceFolder}/input.txt"
         }
-
     ]
+    
 }

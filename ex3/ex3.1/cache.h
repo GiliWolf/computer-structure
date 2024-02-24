@@ -25,6 +25,8 @@ cache_line_t** cache; // array of arrays of lines (each array of line is a set, 
 /* CHANGE NEW_ -> NEW? */
 int initialize_line(cache_line_t* line, unsigned int B);
 cache_t initialize_cache(uchar s, uchar t, uchar b, uchar E);
+int find_LFU(cache_line_t* set, int E);
+int convert_bits_to_decimal(int* binary_offset, int num_of_bits, int i);
 uchar read_byte(cache_t cache, uchar* start, long int off);
 void write_byte(cache_t cache, uchar* start, long int off, uchar new_);
 void print_cache(cache_t cache);
