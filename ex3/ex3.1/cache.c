@@ -89,10 +89,13 @@ cache_t initialize_cache(uchar s, uchar t, uchar b, uchar E){
 
 }
 
+/*
+* converts the bits from binary_offset[i] - binary_offset[i+num_of_bits] to a decimal value
+*/
 int convert_bits_to_decimal(int* binary_offset, int num_of_bits, int i){
     int decimal_value = 0;
-    for (i; i < i + num_of_bits; i++) {
-        decimal_value = (decimal_value << 1) | binary_offset[i];
+    for (int j = i; j < i + num_of_bits; j++) {
+        decimal_value = (decimal_value << 1) | binary_offset[j];
     }
     return decimal_value;
 }
@@ -103,6 +106,8 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
     int s = (int) cache.s;
     int b = (int) cache.b;
     int t = (int) cache.t;
+    int E = (int) cache.E;
+    int B= b == 0?1:2<<(b-1);
     // change offset to binary number (array of "bits")
     int m = s + b + t;
     printf("m: %d", m);
@@ -118,8 +123,37 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
     }
     printf("\n");
     
-    int decimal_s = convert_bits_to_decimal(binary_offset, s, t - 1);
+    // get adress values according to off value
+    int set_index = convert_bits_to_decimal(binary_offset, s, t);
+    long int decimal_tag = convert_bits_to_decimal(binary_offset, t, 0);
+    int block_offset = convert_bits_to_decimal(binary_offset, b, t + s);
 
+    // go to the right set using set values
+    cache_line_t* temp_set = cache.cache[set_index];
+    //iterate over each line - 
+    int found_flag = 0;
+    for (int i = 0; i < E; i++){
+        // CACHE HIT    
+        if (temp_set[i].valid == 1 && temp_set[i].tag == decimal_tag){
+            // read byte
+            found_flag = 1;
+            break;
+        }
+    }
+    //get least frequaent 
+    int lfu_line = 0;
+    // CACHE MISS: get data from 'RAM'
+    if (found_flag == 0){
+        uchar data = start[off];
+        temp_set[lfu_line].valid = 1;
+        temp_set[lfu_line].tag = decimal_tag;
+        temp_set[lfu_line].frequency += 1;
+        for (int j = 0; j < B; j++){
+            temp_set[lfu_line].block[j] = start[off+j-block_offset];
+        }
+        printf("%d",temp_set[lfu_line].block[0]);
+        printf("%d",temp_set[lfu_line].block[1]);
+    }
 }
 
 void write_byte(cache_t cache, uchar* start, long int off, uchar new_){
