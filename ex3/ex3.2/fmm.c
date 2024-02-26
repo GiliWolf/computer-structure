@@ -34,31 +34,78 @@
 //     }
 // }
 
-// int size = 4 bytes, block size = 64 bytes -> 64/4=16
+// // int size = 4 bytes, block size = 64 bytes -> 64/4=16
+// void fmm(int n, int* m1, int* m2, int* result) {
+//     int row_index = 0;
+//     int index = 0;
+//     int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunck -> 64/4=16
+//     int chunk_sum = 0;
+//     int index_sum = 0;
+//     for (int i = 0; i < n; i+=chunks) {
+//         for (int j = 0; j < n; j+=chunks) {
+//                 index_sum = 0;
+//                 for(int r_c = i; r_c < i + chunks && r_c < n; r_c++){
+//                     for(int c_c = j; c_c < j + chunks && c_c < n; c_c++){
+//                         for(int k = 0; k < n; k+=chunks){
+//                             chunk_sum = 0;
+//                             for (int k_c = k; k_c < k + chunks && k_c < n; k_c++){
+//                                 int m1_i = r_c * n;
+//                                 int m1_j = k_c;
+//                                 int m2_i = k_c * n;
+//                                 int m2_j = c_c;
+//                                 chunk_sum += m1[r_c * n + k_c] * m2[k_c * n + c_c];
+//                             }
+//                             index_sum += chunk_sum;
+//                         }
+//                         result[i * n + j] = index_sum;
+//                     }
+//                 }
+//         }
+//     }
+// }
+
+// // int size = 4 bytes, block size = 64 bytes -> 64/4=16
+// void fmm(int n, int* m1, int* m2, int* result) {
+//     int row_index = 0;
+//     int index = 0;
+//     int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunck -> 64/4=16
+//     int chunk_sum = 0;
+//     int index_sum = 0;
+//     for(int r_c = 0; r_c < n; r_c++){
+//         for(int c_c = 0; c_c < n; c_c++){
+//             index_sum = 0;
+//             for(int k = 0; k < n; k+=chunks){
+//                 chunk_sum = 0;
+//                 for (int k_c = k; k_c < k + chunks && k_c < n; k_c++){
+//                     int m1_i = r_c * n;
+//                     int m1_j = k_c;
+//                     int m2_i = k_c * n;
+//                     int m2_j = c_c;
+//                     chunk_sum += m1[r_c * n + k_c] * m2[k_c * n + c_c];
+//                 }
+//                     index_sum += chunk_sum;
+//             }
+//                 result[r_c * n + c_c] = index_sum;
+//         }
+//     }
+// }
 void fmm(int n, int* m1, int* m2, int* result) {
-    int row_index = 0;
-    int index = 0;
-    int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunck -> 64/4=16
-    int chunk_sum = 0;
-    int index_sum = 0;
-    for (int i = 0; i < n; i+=chunks) {
-        for (int j = 0; j < n; j+=chunks) {
-            for(int k = 0; k < n; k+=chunks){
-                index_sum = 0;
-                for(int r_c = i; r_c < i + chunks && r_c < n; r_c++){
-                    for(int c_c = j; c_c < j + chunks && c_c < n; c_c++){
-                        chunk_sum = 0;
-                        for (int k_c = k; k_c < k_c + chunks && k_c < n; k_c++){
-                            chunk_sum += m1[r_c * n + k_c] * m2[k_c * n + c_c];
-                        }
-                        index_sum += chunk_sum;
-                    }
+    int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunk -> 64/4=16
+    for (int r_c = 0; r_c < n; r_c++) {
+        for (int c_c = 0; c_c < n; c_c++) {
+            int index_sum = 0; // Initialize index_sum here
+            for (int k = 0; k < n; k += chunks) {
+                int chunk_sum = 0; // Reset chunk_sum inside the loop
+                for (int k_c = k; k_c < k + chunks && k_c < n; k_c++) {
+                    chunk_sum += m1[r_c * n + k_c] * m2[k_c * n + c_c];
                 }
-                result[i * n + j] = index_sum;
+                index_sum += chunk_sum;
             }
+            result[r_c * n + c_c] = index_sum;
         }
     }
 }
+
 
 // // Slow fmm :)
 // void fmm(int n, int* m1, int* m2, int* result) {

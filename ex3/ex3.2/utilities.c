@@ -67,8 +67,13 @@ double measure_time(char* file1, char* file2, char* file_result, int n) {
     int* m1 = read_matrix(file1, n);
     int* m2 = read_matrix(file2, n);
     int* result = create_matrix(file_result, n);
-    print_matrix(result, n);
+    printf("first matrix: ");
+    print_matrix(m1, n);
+    printf("\n\nsec matrix: ");
+    print_matrix(m2, n);
+    printf("\n\\nresult matrix: ");
     fmm(n, m1, m2, result);
+    print_matrix(result, n);
 
     getrusage(RUSAGE_SELF, &ru); // end timer
     endTime = ru.ru_utime;
