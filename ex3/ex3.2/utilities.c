@@ -66,19 +66,20 @@ double measure_time(char* file1, char* file2, char* file_result, int n) {
 
     int* m1 = read_matrix(file1, n);
     int* m2 = read_matrix(file2, n);
-    int* result = create_matrix(file_result, n);
-    printf("first matrix: ");
-    print_matrix(m1, n);
-    printf("\n\nsec matrix: ");
-    print_matrix(m2, n);
-    printf("\n\nmy result matrix: ");
-    fmm(n, m1, m2, result);
-    print_matrix(result, n);
-    printf("\n\nslowresult matrix: ");
-    slow_fmm(n, m1, m2, result);
-    print_matrix(result, n);
+    int* result1 = create_matrix(file_result, n);
+    int* result2 = create_matrix(file_result, n);
+    // printf("first matrix: ");
+    // print_matrix(m1, n);
+    // printf("\n\nsec matrix: ");
+    // print_matrix(m2, n);
+    // printf("\n\nmy result matrix: ");
+    // fmm(n, m1, m2, result1);
+    // print_matrix(result1, n);
+    // printf("\n\nslowresult matrix: ");
+    // slow_fmm(n, m1, m2, result2);
+    // print_matrix(result2, n);
 
-    // fmm(n, m1, m2, result);
+    fmm(n, m1, m2, result1);
 
     getrusage(RUSAGE_SELF, &ru); // end timer
     endTime = ru.ru_utime;
@@ -87,7 +88,8 @@ double measure_time(char* file1, char* file2, char* file_result, int n) {
 
     free_matrix(m1, n);
     free_matrix(m2, n);
-    free_matrix(result, n);
+    free_matrix(result1, n);
+    free_matrix(result2, n);
 
     return (tE - tS) / 1000.0;
 }

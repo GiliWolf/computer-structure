@@ -90,17 +90,17 @@
 //     }
 // }
 
-//LAST
+// //LAST
 // void fmm(int n, int* m1, int* m2, int* result) {
 //     int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunk -> 64/4=16
 //     int chunk_even_sum = 0;
 //     int chunk_odd_sum = 0;
 //     for (int r_c = 0; r_c < n; r_c++) {
 //         for (int c_c = 0; c_c < n; c_c++) {
-//             int index_sum = 0; // Initialize index_sum here
+//             int index_sum = 0;
 //             for (int k = 0; k < n; k += chunks) {
 //                 chunk_even_sum = 0;
-//                 chunk_odd_sum = 0; // Reset chunk_sum inside the loop
+//                 chunk_odd_sum = 0; 
 //                 for (int k_c = k; k_c < k + chunks && k_c < n; k_c+=2) {
 //                     int temp_m1_index = r_c * n + k_c;
 //                     chunk_even_sum += m1[temp_m1_index] * m2[k_c * n + c_c];
@@ -114,17 +114,48 @@
 //     }
 // }
 //BOOK
+// void fmm(int n, int* m1, int* m2, int* result) {
+//     int temp = 0;
+//     for (int i = 0; i < n; i++) {
+//         for (int k = 0; k < n; k++){
+//             temp = m1[i * n + k];
+//             for (int j = 0; j < n; j++) {
+//                 int temp_m2 = m2[k * n + j];
+//                 result[i * n + j]=0;
+//                 int mult = temp * temp_m2;
+//                 result[i * n + j] += mult; // result[i][j] += m1[i][k] * m2[k][j]
+//             }
+//             temp = 0;
+//         }
+//         temp = 0;
+//     }
+// }
 void fmm(int n, int* m1, int* m2, int* result) {
-    int temp = 0;
     for (int i = 0; i < n; i++) {
-        for (int k = 0; k < n; k++){
-            temp = m1[i * n + k];
-            for (int j = 0; j < n; j++) {
-                result[i * n + j] += temp * m2[k * n + j];  // result[i][j] += m1[i][k] * m2[k][j]
-            }
-            temp = 0;
+        for (int j = 0; j < n; j++) {
+            result[i * n + j] = 0;
         }
-        temp = 0;
+    }
+    for (int k = 0; k < n; k++){
+        int k_mul_n = k*n;
+        int limit = n-1;
+        for (int i = 0; i < n; i++) {
+            int i_mul_n = i * n;
+            int temp = m1[i_mul_n + k];
+            for (int j = 0; j < limit; j+=2) {
+                // if (k == 0){
+                //     result[i_mul_n + j] = 0;
+                // }
+                int j_plus_1 = j + 1;
+                result[i_mul_n + j] += temp * m2[k_mul_n + j];
+                result[i_mul_n + j_plus_1] += temp * m2[k_mul_n + j_plus_1];
+                // result[i_mul_n + j + 2] += temp * m2[k_mul_n + j +2];
+                // result[i_mul_n + j + 3] += temp * m2[k_mul_n + j +3];
+            }
+        }
+        // printf("kth matrix: \n");
+        // print_matrix(result, n);
+        // printf("\n");
     }
 }
 
