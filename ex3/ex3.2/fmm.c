@@ -89,22 +89,56 @@
 //         }
 //     }
 // }
+
+//LAST
+// void fmm(int n, int* m1, int* m2, int* result) {
+//     int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunk -> 64/4=16
+//     int chunk_even_sum = 0;
+//     int chunk_odd_sum = 0;
+//     for (int r_c = 0; r_c < n; r_c++) {
+//         for (int c_c = 0; c_c < n; c_c++) {
+//             int index_sum = 0; // Initialize index_sum here
+//             for (int k = 0; k < n; k += chunks) {
+//                 chunk_even_sum = 0;
+//                 chunk_odd_sum = 0; // Reset chunk_sum inside the loop
+//                 for (int k_c = k; k_c < k + chunks && k_c < n; k_c+=2) {
+//                     int temp_m1_index = r_c * n + k_c;
+//                     chunk_even_sum += m1[temp_m1_index] * m2[k_c * n + c_c];
+//                     chunk_odd_sum += m1[temp_m1_index + 1] * m2[(k_c + 1) * n + c_c];
+//                 }
+//                 index_sum += chunk_even_sum + chunk_odd_sum;
+//             }
+//             result[r_c * n + c_c] = index_sum;
+//         }
+
+//     }
+// }
+//BOOK
 void fmm(int n, int* m1, int* m2, int* result) {
-    int chunks = 16; // int size = 4 bytes, block size = 64 bytes, chunk -> 64/4=16
-    for (int r_c = 0; r_c < n; r_c++) {
-        for (int c_c = 0; c_c < n; c_c++) {
-            int index_sum = 0; // Initialize index_sum here
-            for (int k = 0; k < n; k += chunks) {
-                int chunk_sum = 0; // Reset chunk_sum inside the loop
-                for (int k_c = k; k_c < k + chunks && k_c < n; k_c++) {
-                    chunk_sum += m1[r_c * n + k_c] * m2[k_c * n + c_c];
-                }
-                index_sum += chunk_sum;
+    int temp = 0;
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < n; k++){
+            temp = m1[i * n + k];
+            for (int j = 0; j < n; j++) {
+                result[i * n + j] += temp * m2[k * n + j];  // result[i][j] += m1[i][k] * m2[k][j]
             }
-            result[r_c * n + c_c] = index_sum;
+            temp = 0;
+        }
+        temp = 0;
+    }
+}
+
+
+void slow_fmm(int n, int* m1, int* m2, int* result) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            result[i * n + j] = 0;  // result[i][j] = 0
+            for (int k = 0; k < n; k++) 
+                result[i * n + j] += m1[i * n + k] * m2[k * n + j];  // result[i][j] += m1[i][k] * m2[k][j]
         }
     }
 }
+
 
 
 // // Slow fmm :)

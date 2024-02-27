@@ -17,4 +17,5 @@ void free_matrix(int* mat, int n);
 double measure_time(char* file1, char* file2, char* file_result, int n);
 
 void fmm(int n, int* m1, int* m2, int* result);
+void slow_fmm(int n, int* m1, int* m2, int* result);
 
