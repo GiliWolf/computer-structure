@@ -136,38 +136,30 @@ void fmm(int n, int* m1, int* m2, int* result) {
     int limit = n-1;
     for (int k = 0; k < n; k++){
         int i_mul_n = 0; // i * n 
-        for (int i = 0; i < n; i++) {
-            int temp = m1[i_mul_n + k];
+        // for (int i = 0; i < n; i++) {
+        int* temp = m1 + i_mul_n + k; // m1[i * n  + k];
+        int* limit_temp = m1 + n*n + k; // m1[n * n + k]
+        while (temp < limit_temp){
             int i_n_j = i_mul_n; // i * n + j 
             int* result_ptr = result + i_mul_n; // result + i * n 
+            int* limit_result_ptr = result_ptr + limit; // result + i * n + (n-1)
             int* m2_ptr = m2 + k_mul_n;
             int* limit_ptr = result + i_n_j + limit;
-            for (int j = 0; j < limit; j+=2) {
+            // for (int j = 0; j < limit; j+=2) {
+            while (result_ptr < limit_result_ptr){
                 if (k == 0){
-                    result[i_n_j] = 0;
-                    result[i_n_j + 1] = 0;
+                    *result_ptr = 0;
+                    *(result_ptr + 1) = 0;
                     // *result_ptr = 0;
                     // *(result_ptr + 1) =0;
                 } 
-                //works
-                // result[i_n_j] += temp * m2[k_mul_n + j]; // i *n + j  = [i * n + k] * [k * n + j]
-                // result[i_n_j + 1] += temp * m2[k_mul_n + j +1]; // i *n + j + 1 = [i * n + k] * [k * n + j +1]
 
                 //works
-                // result[i_n_j] += temp * (*m2_ptr++); // i *n + j  = [i * n + k] * [k * n + j]
-                // result[i_n_j + 1] += temp * (*m2_ptr++); // i *n + j + 1 = [i * n + k] * [k * n + j +1]
+                (*result_ptr++) += (*temp) * (*m2_ptr++); // i *n + j  = [i * n + k] * [k * n + j]
+                (*result_ptr++) += (*temp) * (*m2_ptr++); // i *n + j + 1 = [i * n + k] * [k * n + j +1]
 
-                //works
-                (*result_ptr++) += temp * (*m2_ptr++); // i *n + j  = [i * n + k] * [k * n + j]
-                (*result_ptr++) += temp * (*m2_ptr++); // i *n + j + 1 = [i * n + k] * [k * n + j +1]
-
-                //doest work
-                // *result_ptr++ = temp * m2[k_mul_n + j];
-                // *result_ptr++ = temp * m2[k_mul_n + j +1];
-
-                i_n_j+=2;
-                // result_ptr +=2;; // i * n + j + 2
             }
+            temp += n; // temp = m1[i * n + n] == m2[(i + 1) * n] 
             i_mul_n += n; // i * n + n == (i + 1) * n 
         }
         k_mul_n += n; // k * n + n == (k + 1) * n
