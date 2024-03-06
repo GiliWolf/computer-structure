@@ -131,28 +131,29 @@
 //     }
 // }
 void fmm(int n, int* m1, int* m2, int* result) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            result[i * n + j] = 0;
-        }
-    }
+
+    int k_mul_n = 0; // k *n 
+    int limit = n-1;
     for (int k = 0; k < n; k++){
-        int k_mul_n = k*n;
-        int limit = n-1;
+        int i_mul_n = 0; // i * n 
         for (int i = 0; i < n; i++) {
-            int i_mul_n = i * n;
             int temp = m1[i_mul_n + k];
+            int i_n_j = i_mul_n; // i * n + j 
             for (int j = 0; j < limit; j+=2) {
-                // if (k == 0){
-                //     result[i_mul_n + j] = 0;
-                // }
-                int j_plus_1 = j + 1;
-                result[i_mul_n + j] += temp * m2[k_mul_n + j];
-                result[i_mul_n + j_plus_1] += temp * m2[k_mul_n + j_plus_1];
+                if (k == 0){
+                    result[i_n_j] = 0;
+                    result[i_n_j + 1] = 0;
+                } 
+                result[i_n_j] += temp * m2[k_mul_n + j]; // i *n + j  = [i * n + k] * [k * n + j]
+                result[i_n_j + 1] += temp * m2[k_mul_n + j +1]; // i *n + j + 1 = [i * n + k] * [k * n + j +1]
                 // result[i_mul_n + j + 2] += temp * m2[k_mul_n + j +2];
                 // result[i_mul_n + j + 3] += temp * m2[k_mul_n + j +3];
+
+                i_n_j +=2;; // i * n + j + 2
             }
+            i_mul_n += n; // i * n + n == (i + 1) * n 
         }
+        k_mul_n += n; // k * n + n == (k + 1) * n
         // printf("kth matrix: \n");
         // print_matrix(result, n);
         // printf("\n");
