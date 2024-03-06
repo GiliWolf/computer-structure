@@ -139,17 +139,24 @@ void fmm(int n, int* m1, int* m2, int* result) {
         for (int i = 0; i < n; i++) {
             int temp = m1[i_mul_n + k];
             int i_n_j = i_mul_n; // i * n + j 
+            // int* result_ptr = result + i_mul_n; // result + i * n 
+            int* m2_ptr = m2 + k_mul_n;
             for (int j = 0; j < limit; j+=2) {
                 if (k == 0){
                     result[i_n_j] = 0;
                     result[i_n_j + 1] = 0;
+                    // *result_ptr = 0;
+                    // *(result_ptr + 1) =0;
                 } 
-                result[i_n_j] += temp * m2[k_mul_n + j]; // i *n + j  = [i * n + k] * [k * n + j]
-                result[i_n_j + 1] += temp * m2[k_mul_n + j +1]; // i *n + j + 1 = [i * n + k] * [k * n + j +1]
-                // result[i_mul_n + j + 2] += temp * m2[k_mul_n + j +2];
-                // result[i_mul_n + j + 3] += temp * m2[k_mul_n + j +3];
+                // result[i_n_j] += temp * m2[k_mul_n + j]; // i *n + j  = [i * n + k] * [k * n + j]
+                // result[i_n_j + 1] += temp * m2[k_mul_n + j +1]; // i *n + j + 1 = [i * n + k] * [k * n + j +1]
+                result[i_n_j] += temp * (*m2_ptr++); // i *n + j  = [i * n + k] * [k * n + j]
+                result[i_n_j + 1] += temp * (*m2_ptr++); // i *n + j + 1 = [i * n + k] * [k * n + j +1]
+                // *result_ptr++ = temp * m2[k_mul_n + j];
+                // *result_ptr++ = temp * m2[k_mul_n + j +1];
 
-                i_n_j +=2;; // i * n + j + 2
+                i_n_j+=2;
+                // result_ptr +=2;; // i * n + j + 2
             }
             i_mul_n += n; // i * n + n == (i + 1) * n 
         }
