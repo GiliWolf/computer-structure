@@ -171,7 +171,7 @@ uchar read_byte(cache_t cache, uchar* start, long int off){
         uchar data = start[off];
         temp_set[lfu_line].valid = 1;
         temp_set[lfu_line].tag = decimal_tag;
-        temp_set[lfu_line].frequency += 1;
+        temp_set[lfu_line].frequency = 1;
         for (int j = 0; j < B; j++){
             temp_set[lfu_line].block[j] = start[off+j-block_offset];
         }
