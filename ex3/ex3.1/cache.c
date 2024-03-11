@@ -1,3 +1,4 @@
+/* 315144907 Gili Wolf */
 #include "cache.h"
 
 void print_cache(cache_t cache){
@@ -49,8 +50,6 @@ cache_t initialize_cache(uchar s, uchar t, uchar b, uchar E){
     cache_struct.b = b;
     cache_struct.E = E;
 
-
-    // CHECK PARAMETERS??
 
     // assign S arrays of line pointer
     cache_struct.cache = (cache_line_t**)malloc(S * sizeof(cache_line_t*));
@@ -120,14 +119,7 @@ int find_LFU(cache_line_t* set, int E){
             temp_LFU = set[i].frequency;
             last_LFU_index = i;
         }
-        // // if both has the same frequency
-        // else if (set[i].frequency == temp_LFU){
-        //     // if the last 
-        //     if (i < last_LFU_index){
-        //         temp_LFU = set[i].frequency;
-        //         last_LFU_index = i;
-        //     }
-        // }
+
     }
     return last_LFU_index;
 }
